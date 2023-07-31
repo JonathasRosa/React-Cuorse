@@ -16,7 +16,7 @@ const ListRender = () => {
         })
     }
   return (
-    <div>
+    <>
         <h2>ListRender</h2>
         <ul> 
             {list.map((item, i) => (
@@ -29,7 +29,7 @@ const ListRender = () => {
             ))}
         </ul>
         <button onClick={deleteRandom}>Delete random user</button>
-    </div>
+    </>
   )
 }
 

@@ -6,7 +6,7 @@ const ManageData = () => {
     const [number, setNumber] = useState(15);
     console.log(number);
   return (
-    <div>
+    <>
         <div><h2>ManageData</h2></div>
         <div>
             <p>Valor: { someData } </p>
@@ -16,7 +16,7 @@ const ManageData = () => {
             <p>Valor: { number } </p>
             <button onClick={() => setNumber(25)}>Mudar State</button>
         </div>
-    </div>
+    </>
   )
 }
 
