@@ -1,10 +1,14 @@
 form {
     width: 500px;
     margin: 0 auto;
-    text-aling: left;
+    display: flex;
+    flex-direction: column;
+    aling-item: left;
 }
 
-input, textarea, select, {
-    display: block;
+input, label, textarea, select, {
+    display: flex;
+    flex-direction: column;
     margin-top: 10px;
+    padding: 10px;
 }
