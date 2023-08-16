@@ -1,23 +1,27 @@
 /* eslint-disable no-unused-vars */
 import './App.css';
 import { useState, useEffect } from "react";
-
+//4 - CustomHook
+import { useFetch } from "./hooks/useFetch";
 const url = "http://localhost:3000/products";
 
 function App() {
   const [ products, setProducts ] = useState([]);
+  //4 - CustomHook
+  const { data: items, httpConfig, loading } = useFetch(url);
   const [name, setName] = useState("");
   const [price, setPrice] = useState("");
+
   //1 - Resgatando dados
   // eslint-disable-next-line react-hooks/exhaustive-deps
-  useEffect(() => {
-    async function fetchData(){
-      const res = await fetch(url);
-      const data = await res.json();
-      setProducts(data);
-    }
-    fetchData();
-  }, []);
+ // useEffect(() => {
+   // async function fetchData(){
+     // const res = await fetch(url);
+     // const data = await res.json();
+      //setProducts(data);
+   // }
+   // fetchData();
+  //}, []);
 
   //2 - ADD de products
   const handleSubmit = async (e) => {
@@ -26,26 +30,32 @@ function App() {
       name,
       price
     };
-    const res = await fetch(url, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json"
-      },
-      body: JSON.stringify(product),
-    });
+    //const res = await fetch(url, {
+     // method: "POST",
+     // headers: {
+       // "Content-Type": "application/json"
+     // },
+      //body: JSON.stringify(product),
+    //});
   };
   // 3 - Carregamento dinamico - entender melhor para aplicação.
+  httpConfig(products, "POST");
 
+  
   return (
     <>
       <h1>Lista de Produtos</h1>
-      <ul>
-        {products.map((product) =>(
+      {/*6 - loading*/}
+      {loading && <p>Carregando dados...</p>}
+      {!loading && (
+        <ul>
+        {items && items.map((product) =>(
           <li key={product.id}>
             {product.name} - R$: {product.price}
           </li>
         ))}
       </ul>
+      )}
       <div className="add-product">
           <form onSubmit={handleSubmit}>
             <label>
