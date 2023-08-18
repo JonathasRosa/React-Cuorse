@@ -1,84 +1,111 @@
 /* eslint-disable no-unused-vars */
 import './App.css';
-import { useState, useEffect } from "react";
-//4 - CustomHook
+
+import { useState } from "react";
+
+// 4 - custom hook
 import { useFetch } from "./hooks/useFetch";
+
+// 8 - errar url para mostrar erro
+// "http://localhost:3000/products"
 const url = "http://localhost:3000/products";
 
 function App() {
-  const [ products, setProducts ] = useState([]);
-  //4 - CustomHook
-  const { data: items, httpConfig, loading } = useFetch(url);
+  const [products, setProducts] = useState([]);
+
+  // 4 - custom hook e 5 - refactor post
+  const { data: items, httpConfig, loading, error } = useFetch(url);
+
   const [name, setName] = useState("");
   const [price, setPrice] = useState("");
 
-  //1 - Resgatando dados
-  // eslint-disable-next-line react-hooks/exhaustive-deps
- // useEffect(() => {
-   // async function fetchData(){
-     // const res = await fetch(url);
-     // const data = await res.json();
-      //setProducts(data);
-   // }
-   // fetchData();
-  //}, []);
+  // 1 - resgatando dados
+  // useEffect(async () => {
+  //   const res = await fetch("http://localhost:3000/products");
 
-  //2 - ADD de products
+  //   const data = await res.json();
+
+  //   setProducts(data);
+  // }, []);
+
+  // 2 - add product
   const handleSubmit = async (e) => {
     e.preventDefault();
+
     const product = {
       name,
-      price
+      price,
     };
-    //const res = await fetch(url, {
-     // method: "POST",
-     // headers: {
-       // "Content-Type": "application/json"
-     // },
-      //body: JSON.stringify(product),
-    //});
-  };
-  // 3 - Carregamento dinamico - entender melhor para aplicação.
-  httpConfig(products, "POST");
 
-  
+    // const res = await fetch("http://localhost:3000/products", {
+    //   method: "POST",
+    //   headers: {
+    //     "Content-Type": "application/json",
+    //   },
+    //   body: JSON.stringify(product),
+    // });
+
+    // const addedProduct = await res.json();
+
+    // 3 - carregamento dinâmico
+    // setProducts((prevProducts) => [...prevProducts, addedProduct]);
+
+    // 5 - refatorar post
+    httpConfig(product, "POST");
+
+    setName("");
+    setPrice("");
+  };
+
+  /* 9 - desafio */
+  const handleRemove = (id) => {
+    httpConfig(id, "DELETE");
+  };
+
   return (
-    <>
-      <h1>Lista de Produtos</h1>
-      {/*6 - loading*/}
+    <div className="App">
+      <h1>Lista de produtos</h1>
+      {/* 6 - state de loading */}
       {loading && <p>Carregando dados...</p>}
-      {!loading && (
-        <ul>
-        {items && items.map((product) =>(
-          <li key={product.id}>
-            {product.name} - R$: {product.price}
-          </li>
-        ))}
+      {error && <p>{error}</p>}
+      <ul>
+        {items &&
+          items.map((product) => (
+            <li key={product.id}>
+              {product.name} - R$: {product.price}
+              {/* 9 - desafio */}
+              <button onClick={() => handleRemove(product.id)}>Excluir</button>
+            </li>
+          ))}
       </ul>
-      )}
+
       <div className="add-product">
-          <form onSubmit={handleSubmit}>
-            <label>
-              Nome: 
-              <input 
-              type='text' 
-              value={name} 
-              name='name'
-              onChange={(e) => setName(e.target.value)} />
-            </label>
-            <label>
-              Preço: 
-              <input 
-              type='number' 
-              value={price} 
-              name='price'
-              onChange={(e) => setPrice(e.target.value)} />
-            </label>
-            <button type='submit' value="criar">Criar</button>
-          </form>
+        <p>Adicionar produto:</p>
+        <form onSubmit={handleSubmit}>
+          <label>
+            Nome:
+            <input
+              type="text"
+              value={name}
+              name="name"
+              onChange={(e) => setName(e.target.value)}
+            />
+          </label>
+          <label>
+            Preço:
+            <input
+              type="number"
+              value={price}
+              name="price"
+              onChange={(e) => setPrice(e.target.value)}
+            />
+          </label>
+          {/* 7 - state de loading no post */}
+          {loading ? <p>Aguarde!</p> : <input type="submit" value="Criar" />}
+        </form>
       </div>
-    </>
-  )
+    </div>
+  );
 }
 
-export default App
+export default App;
