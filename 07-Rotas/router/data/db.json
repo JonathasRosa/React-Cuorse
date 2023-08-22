@@ -1,0 +1,34 @@
+{
+    "products": [
+      {
+        "id": 1,
+        "name": "Camisa",
+        "price": 59.9
+      },
+      {
+        "id": 2,
+        "name": "Shorts",
+        "price": 39.9
+      },
+      {
+        "id": 3,
+        "name": "Boné",
+        "price": 19.9
+      },
+      {
+        "id": 4,
+        "name": "Meias",
+        "price": 18.9
+      },
+      {
+        "id": 5,
+        "name": "Tênis",
+        "price": 119.9
+      },
+      {
+        "name": "Cueca",
+        "price": "29.90",
+        "id": 6
+      }
+    ]
+  }
