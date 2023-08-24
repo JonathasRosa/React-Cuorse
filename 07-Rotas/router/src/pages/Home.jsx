@@ -15,7 +15,9 @@ const Home = () => {
                 {items && items.map(item => (
                     <li key={item.id}>
                         <h2>{item.name}</h2>
-                        <p>{item.price}</p>
+                        <p>R$: {item.price}</p>
+                        {/*4 - rota dinamica */}
+                        <link to={`/products/${item.id}`}>Detalhes</link>
                     </li>
                 ))}
             </ul>
