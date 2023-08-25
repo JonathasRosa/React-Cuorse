@@ -30,6 +30,10 @@ function App() {
           <Route path="/products/:id/info" element={<Info/>} />
           {/*4 - Rota dinamica*/}
           <Route path="/products/:id" element={<Product/>} />
+          {/*9 - Search*/}
+          <Route path="/search" element={<Search />} />
+          {/*10 - Redirect */}
+          <Route path="/company" element={ <Navigate to="/about"/> } />
           {/*7 - No Match route*/}
           <Route path="*" element={<NotFound/>} />
         </Routes>
